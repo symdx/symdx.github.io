@@ -196,6 +196,18 @@
   .confirmation--error {
     color: #B3261E;
   }
+
+  .bot-trap {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
 </style>
 </head>
 <body>
@@ -235,7 +247,11 @@
   <section>
     <h1>Our vision</h1>
     <div class="vision">
-      SymDx envisions a world free of HIV, reached with the medicines and methods that already exist today. HIV prevention and treatment are remarkably effective, but only for the people actually taking them, and HIV care today has no reliable way of knowing who those people are. SymDx exists to replace that assumption with measurement, so that HIV care can be personalized for each patient and delivered at the scale of a whole population.
+      SymDx envisions a world free of HIV, reached with the medicines and methods that already exist today. HIV
+      prevention and treatment are remarkably effective, but only for the people actually taking them, and HIV care
+      today has no reliable way of knowing who those people are. SymDx exists to replace that assumption with
+      measurement, so that HIV care can be personalized for each patient and delivered at the scale of a whole
+      population.
     </div>
   </section>
 
@@ -254,6 +270,7 @@
         <label for="message">Message</label>
         <textarea id="message" name="message" required></textarea>
       </div>
+      <input type="text" name="_gotcha" class="bot-trap" tabindex="-1" autocomplete="off">
       <div class="submit-row">
         <button type="submit" id="submit-btn">Send message</button>
         <p id="form-confirmation" class="confirmation" hidden>Thanks — your message has been sent.</p>
