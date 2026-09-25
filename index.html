@@ -43,19 +43,6 @@
     padding-bottom: 8px;
   }
 
-  .hero::before {
-    content: "";
-    position: absolute;
-    top: -60px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 900px;
-    height: 900px;
-    background: radial-gradient(circle, var(--pale-blue) 0%, rgba(200,212,235,0) 65%);
-    opacity: 0.5;
-    pointer-events: none;
-  }
-
   .logo-wrap {
     position: relative;
     display: flex;
@@ -183,6 +170,31 @@
     background: var(--navy);
     transform: translateY(-1px);
   }
+
+  button:disabled {
+    opacity: 0.7;
+    cursor: default;
+    transform: none;
+  }
+
+  .submit-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  .confirmation {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--blue);
+    animation: fade-in 0.3s ease;
+  }
+
+  .confirmation--error {
+    color: #B3261E;
+  }
 </style>
 </head>
 <body>
@@ -222,14 +234,15 @@
   <section>
     <h1>Our vision</h1>
     <div class="vision">
-      Vision:
-SymDx envisions a world free of HIV, reached with the medicines and methods that already exist today. HIV prevention and treatment are remarkably effective, but only for the people actually taking them, and HIV care today has no reliable way of knowing who those people are. SymDx exists to replace that assumption with measurement, so that HIV care can be personalized for each patient and delivered at the scale of a whole population.
+      SymDx exists to put fast, reliable diagnostic answers directly in the hands of the people who need them —
+      patients, clinicians, and care teams alike. We believe timely, accurate testing shouldn't require a lab visit
+      or a days-long wait, and we're building the tools to make that a reality everywhere care happens.
     </div>
   </section>
 
   <section>
     <h1>Contact us</h1>
-    <form onsubmit="return false;">
+    <form id="contact-form" action="https://formspree.io/f/maendvqz" method="POST">
       <div>
         <label for="name">Name</label>
         <input type="text" id="name" name="name" required>
@@ -242,11 +255,49 @@ SymDx envisions a world free of HIV, reached with the medicines and methods that
         <label for="message">Message</label>
         <textarea id="message" name="message" required></textarea>
       </div>
-      <button type="submit">Send message</button>
+      <div class="submit-row">
+        <button type="submit" id="submit-btn">Send message</button>
+        <p id="form-confirmation" class="confirmation" hidden>Thanks — your message has been sent.</p>
+        <p id="form-error" class="confirmation confirmation--error" hidden>Something went wrong. Please try again.</p>
+      </div>
     </form>
   </section>
 
 </main>
+
+<script>
+  const form = document.getElementById('contact-form');
+  const submitBtn = document.getElementById('submit-btn');
+  const confirmation = document.getElementById('form-confirmation');
+  const errorMsg = document.getElementById('form-error');
+
+  form.addEventListener('submit', async function (event) {
+    event.preventDefault();
+    errorMsg.hidden = true;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (response.ok) {
+        submitBtn.hidden = true;
+        confirmation.hidden = false;
+        form.reset();
+      } else {
+        throw new Error('Form submission failed');
+      }
+    } catch (err) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Send message';
+      errorMsg.hidden = false;
+    }
+  });
+</script>
 
 </body>
 </html>
