@@ -25,16 +25,46 @@
     font-family: 'Montserrat', Arial, sans-serif;
     color: var(--near-black);
     background: #ffffff;
+    animation: fade-in 0.6s ease;
+  }
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    body { animation: none; }
+  }
+
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding-bottom: 8px;
+  }
+
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 900px;
+    height: 900px;
+    background: radial-gradient(circle, var(--pale-blue) 0%, rgba(200,212,235,0) 65%);
+    opacity: 0.5;
+    pointer-events: none;
   }
 
   .logo-wrap {
+    position: relative;
     display: flex;
     justify-content: center;
-    padding: 64px 24px 40px;
+    padding: 72px 24px 56px;
   }
 
   .logo-wrap svg {
-    height: 88px;
+    height: 92px;
     width: auto;
   }
 
@@ -50,31 +80,56 @@
 
   h1 {
     font-size: 20px;
-    font-weight: 600;
+    font-weight: 700;
     color: var(--navy);
     margin: 0 0 16px;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  h1::before {
+    content: "";
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background: var(--blue);
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+
+  section:nth-of-type(2) h1::before {
+    background: var(--navy);
   }
 
   .vision {
     background: var(--off-white);
     border: 1px solid var(--pale-blue);
+    border-left: 4px solid var(--blue);
     border-radius: 6px;
     padding: 28px 32px;
     font-size: 15px;
     line-height: 1.6;
     color: var(--near-black);
     text-align: center;
+    box-shadow: 0 4px 16px rgba(0, 26, 70, 0.06);
+    transition: box-shadow 0.25s ease;
+  }
+
+  .vision:hover {
+    box-shadow: 0 6px 20px rgba(0, 26, 70, 0.1);
   }
 
   form {
     background: var(--off-white);
     border: 1px solid var(--pale-blue);
+    border-left: 4px solid var(--navy);
     border-radius: 6px;
     padding: 28px 32px;
     display: flex;
     flex-direction: column;
     gap: 18px;
+    box-shadow: 0 4px 16px rgba(0, 26, 70, 0.06);
   }
 
   label {
@@ -95,12 +150,14 @@
     border-radius: 4px;
     background: #ffffff;
     color: var(--near-black);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
   }
 
   input:focus,
   textarea:focus {
-    outline: 2px solid var(--blue);
-    outline-offset: 1px;
+    outline: none;
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(38, 147, 238, 0.15);
   }
 
   textarea {
@@ -119,15 +176,18 @@
     border-radius: 4px;
     padding: 12px 28px;
     cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
   }
 
   button:hover {
     background: var(--navy);
+    transform: translateY(-1px);
   }
 </style>
 </head>
 <body>
 
+<div class="hero">
 <div class="logo-wrap">
   <svg viewBox="0 0 235.3 59.6" xmlns="http://www.w3.org/2000/svg">
     <rect x="12.5" y="12.5" fill="#C8D4EB" width="34.7" height="6.9"/>
@@ -155,15 +215,15 @@
       V40.2z"/>
   </svg>
 </div>
+</div>
 
 <main>
 
   <section>
     <h1>Our vision</h1>
     <div class="vision">
-      SymDx exists to put fast, reliable diagnostic answers directly in the hands of the people who need them —
-      patients, clinicians, and care teams alike. We believe timely, accurate testing shouldn't require a lab visit
-      or a days-long wait, and we're building the tools to make that a reality everywhere care happens.
+      Vision:
+SymDx envisions a world free of HIV, reached with the medicines and methods that already exist today. HIV prevention and treatment are remarkably effective, but only for the people actually taking them, and HIV care today has no reliable way of knowing who those people are. SymDx exists to replace that assumption with measurement, so that HIV care can be personalized for each patient and delivered at the scale of a whole population.
     </div>
   </section>
 
